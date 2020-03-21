@@ -44,18 +44,18 @@ this.splice(index, 1);
                 private = data.data.privateAlbums.map(item=>item.url)
                 public = data.data.albums.map(item=>item.url)
 
-                $.get(baseUri+"/v1/admin/users/getUserInfo?uid="+id,function(data){
+                $.get(baseUri+"/v1/admin/users/getUserInfo?uid="+id,function(data, status){
                     if (data.data==null || data.data == undefined){
-                        alter("tet")
+                        refreshUI();
                         return;
                     }
                     avator = data.data.avatar;
                     cover = data.data.cover;
                     public = data.data.albums;
                     private = data.data.privateAlbums;
+                    refreshUI();
                 })
 
-                refreshUI()
             });
         }
         imgtemplate= '\
@@ -171,7 +171,7 @@ function getId(uri){
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function(data){alert(data);next()},
+                success: function(data){next()},
                 failure: function(errMsg) {
                     alert(errMsg);
                 }
